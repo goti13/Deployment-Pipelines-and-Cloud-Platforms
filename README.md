@@ -45,6 +45,7 @@ Example snippet for a versioning script in GitHub Actions:
 
 ```
 name: Bump version and tag
+
 on:
   push:
     branches:
@@ -62,7 +63,7 @@ jobs:
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.26.0
         env:
-          GITHUB_TOKEN: ${{" secrets.GITHUB_TOKEN "}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
         # This action automatically increments the patch version and tags the commit.
         # 'DEFAULT_BUMP' specifies the type of version bump (major, minor, patch).
@@ -97,10 +98,10 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{" secrets.GITHUB_TOKEN "}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{" github.ref "}}
-          release_name: Release ${{" github.ref "}}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           # This step creates a new release in GitHub using the tag name.
 
 ```
@@ -157,15 +158,17 @@ jobs:
     - name: Set up AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{" secrets.AWS_ACCESS_KEY_ID "}}
-        aws-secret-access-key: ${{" secrets.AWS_SECRET_ACCESS_KEY "}}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
       # Configures AWS credentials from GitHub secrets.
 
     - name: Deploy to AWS
       run: |
         # Add your deployment script here.
-        # For example, using AWS CLI commands to deploy.
+        # For example, using AWS CLI commands to deploy:
+        # aws s3 sync ./build s3://your-bucket-name
+
 ```
 
 - This workflow deploys your application to AWS when changes are pushed to the main branch.
